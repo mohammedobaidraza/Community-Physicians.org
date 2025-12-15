@@ -1,10 +1,9 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 
 /* IMPORT IMAGES */
-import baderImg from "@/assets/Founder1.jpg";
 import jibranImg from "@/assets/doctor-1.jpg";
 import jawwadImg from "@/assets/doctor-3.jpg";
 import arifImg from "@/assets/doctor-2.jpg";
@@ -18,18 +17,11 @@ import kristenImg from "@/assets/kristen rogers.jpg";
 import sanaImg from "@/assets/Sana .jpg";
 
 /* UPDATED IMAGES */
-import rabiImg from "@/assets/Rabi.png";             // ← Correct Rabi image
-import dennisImg from "@/assets/doctor-3----.jpg";   // ← Correct Keane image
+import rabiImg from "@/assets/Rabi.png";
+import dennisImg from "@/assets/doctor-3----.jpg";
 
-/* PHYSICIANS LIST */
+/* PHYSICIANS LIST - UPDATED SPECIALTIES */
 const physicians = [
- /* {
-    id: 1,
-    image: baderImg,
-    name: "Dr. Bader Almoshelli",
-    specialty: "Physical Medicine & Rehabilitation",
-    bio: "Specializing in PM&R with extensive experience in pain management, musculoskeletal rehab, and neurologic recovery."
-  },*/
   {
     id: 2,
     image: jibranImg,
@@ -38,17 +30,24 @@ const physicians = [
     bio: "Experienced Family Medicine physician providing compassionate primary care and chronic disease management."
   },
   {
+    id: 7,
+    image: nabilImg,
+    name: "Dr. Nabil Dada",
+    specialty: "Family Medicine",
+    bio: "Family Medicine specialist dedicated to comprehensive patient care and long-term health strategies."
+  },
+  {
     id: 3,
     image: jawwadImg,
     name: "Dr. Jawwad Hussain",
-    specialty: "Internal Medicine",
-    bio: "Board-certified internal medicine physician specializing in adult primary care and preventive health."
+    specialty: "Family Medicine",
+    bio: "Board-certified physician specializing in primary care, preventive health, and family wellness."
   },
   {
     id: 4,
     image: arifImg,
     name: "Dr. Arif B. Hussain",
-    specialty: "Pain Management & Rehabilitation",
+    specialty: "Pain Management & Physical Medicine",
     bio: "Interventional pain specialist with advanced training from Johns Hopkins and the University of Michigan."
   },
   {
@@ -62,15 +61,15 @@ const physicians = [
     id: 6,
     image: nazimuddinImg,
     name: "Dr. Ahmed Nazimuddin, MD",
-    specialty: "Geriatric & Family Medicine",
-    bio: "Specializes in care for older adults, chronic disease management, and empowering patients with long-term health strategies."
+    specialty: "Family Medicine",
+    bio: "Specializes in care for adults and seniors, focusing on chronic disease management and family health."
   },
   {
-    id: 7,
-    image: nabilImg,
-    name: "Dr. Nabil Dada",
-    specialty: "Cardiology",
-    bio: "Cardiology specialist with expertise in cardiovascular diagnostics, preventive medicine, and long-term heart health."
+    id: 9,
+    image: enasImg,
+    name: "Dr. Enas Kanama, MD",
+    specialty: "Family Medicine",
+    bio: "Family medicine physician specializing in patient-centered holistic care and chronic condition management."
   },
   {
     id: 8,
@@ -78,13 +77,6 @@ const physicians = [
     name: "Alexis Kozlowski, APRN, RN",
     specialty: "Advanced Practice Nursing",
     bio: "Accomplished nurse practitioner providing comprehensive evaluation, treatment planning, and chronic care support."
-  },
-  {
-    id: 9,
-    image: enasImg,
-    name: "Dr. Enas Kanama, MD",
-    specialty: "Internal Medicine",
-    bio: "Internal medicine physician specializing in chronic disease management and patient-centered holistic care."
   },
   {
     id: 10,
@@ -104,24 +96,26 @@ const physicians = [
     id: 12,
     image: rabiImg,
     name: "Dr. Joseph Rabi, MD",
-    specialty: "Pain Management & PM&R",
-    bio: "Pain management and rehabilitation physician experienced in spine pain, migraines, electrodiagnostics, and regenerative medicine."
+    specialty: "Physical Medicine & Rehabilitation",
+    bio: "Specialist in spine pain, migraines, electrodiagnostics, and regenerative medicine."
   },
   {
     id: 13,
     image: dennisImg,
     name: "Dr. Dennis Keane, MD",
-    specialty: "Physical Medicine & Rehabilitation",
-    bio: "PM&R specialist with over 35 years of experience treating musculoskeletal injuries and neurological conditions through tailored rehabilitation."
+    specialty: "Pain Management & Rehabilitation",
+    bio: "Specialist with over 35 years of experience treating musculoskeletal injuries through tailored rehabilitation."
   }
 ];
 
-/* MAIN COMPONENT */
 const Physicians = () => {
   const [selectedFilter, setSelectedFilter] = useState("All");
+  const [selectedPhysician, setSelectedPhysician] = useState(null);
 
+  // Extract unique specialties for the filter buttons
   const specialties = ["All", ...new Set(physicians.map((p) => p.specialty))];
 
+  // Filter logic
   const filteredPhysicians =
     selectedFilter === "All"
       ? physicians
@@ -169,47 +163,73 @@ const Physicians = () => {
             {/* GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {filteredPhysicians.map((physician) => (
-                <HoverCard key={physician.id} openDelay={200}>
-                  <HoverCardTrigger asChild>
+                <div 
+                  key={physician.id} 
+                  onClick={() => setSelectedPhysician(physician)}
+                >
+                  {/* CARD DESIGN (White Style) */}
+                  <div className="relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-white">
 
-                    {/* CARD */}
-                    <div className="relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group bg-white">
-
-                      {/* CENTERED IMAGE */}
-                      <div className="w-full h-64 lg:h-80 flex items-center justify-center bg-white">
-                        <img
-                          src={physician.image}
-                          alt={physician.name}
-                          className="object-contain max-h-full rounded-2xl"
-                        />
-                      </div>
-
-                      {/* OVERLAY */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <div>
-                          <p className="text-white font-medium text-xl">{physician.name}</p>
-                          <p className="text-white/80 text-sm">{physician.specialty}</p>
-                        </div>
-                      </div>
+                    {/* CENTERED IMAGE */}
+                    <div className="w-full h-64 lg:h-80 flex items-center justify-center bg-white">
+                      <img
+                        src={physician.image}
+                        alt={physician.name}
+                        className="object-contain max-h-full rounded-2xl"
+                      />
                     </div>
 
-                  </HoverCardTrigger>
-
-                  {/* BIO CARD */}
-                  <HoverCardContent className="w-80" side="top">
-                    <div className="space-y-2">
-                      <h4 className="text-lg font-semibold text-foreground">{physician.name}</h4>
-                      <p className="text-sm font-medium text-accent">{physician.specialty}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{physician.bio}</p>
+                    {/* OVERLAY */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                      <div>
+                        <p className="text-white font-medium text-xl">{physician.name}</p>
+                        <p className="text-white/80 text-sm">{physician.specialty}</p>
+                      </div>
                     </div>
-                  </HoverCardContent>
-                </HoverCard>
+                    
+                    {/* Plus Icon for Click Indication */}
+                    <div className="absolute top-4 right-4 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-primary font-bold">+</span>
+                    </div>
+
+                  </div>
+                </div>
               ))}
             </div>
 
           </div>
         </section>
       </main>
+
+      {/* Physician Bio Dialog (Click to Open) */}
+      <Dialog open={!!selectedPhysician} onOpenChange={() => setSelectedPhysician(null)}>
+        <DialogContent className="sm:max-w-md bg-white border-none shadow-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-primary">
+              {selectedPhysician?.name}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+             {/* Image in Dialog */}
+             <div className="w-full h-64 flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden">
+                <img
+                  src={selectedPhysician?.image}
+                  alt={selectedPhysician?.name}
+                  className="object-contain max-h-full"
+                />
+            </div>
+            
+            <div className="space-y-2">
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full">
+                    {selectedPhysician?.specialty}
+                </span>
+                <p className="text-muted-foreground leading-relaxed">
+                {selectedPhysician?.bio}
+                </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
