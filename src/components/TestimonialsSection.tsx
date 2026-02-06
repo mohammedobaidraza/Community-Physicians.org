@@ -1,27 +1,30 @@
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
+import nazimuddinImg from "@/assets/Ahmed Nazimuddin.jpg";
+import sanaImg from "@/assets/Sana .jpg";
+import dennisImg from "@/assets/doctor-3----.jpg";
 
 const testimonials = [
   {
     quote:
-      "It meant everything to me that your team was able to address my medical issues effectively and efficiently.",
-    author: "Frank",
-    role: "CarePods Client",
-    image: "/hero-elderly.jpg",
-  },
-  {
-    quote:
       "CP transformed our post-acute program. Their clinical insight and professionalism are unmatched.",
-    author: "Dr. Sarah Martinez",
-    role: "Medical Director, Sunrise Healthcare",
-    image: "/hero-2.jpg",
+    author: "Dr. Ahmed Nazimuddin, MD",
+    role: "Family Medicine Physician",
+    image: nazimuddinImg,
   },
   {
     quote:
-      "Their physician-led model brings a level of expertise that's transformed how we deliver post-acute care.",
-    author: "Lisa Thompson",
-    role: "Director of Nursing, Heritage Health Systems",
-    image: "/hero-3.jpg",
+      "The physician-led model enables continuity of care that truly improves long-term patient outcomes.",
+    author: "Dr. Sana Siddiqui",
+    role: "Physical Medicine & Rehabilitation",
+    image: sanaImg,
+  },
+  {
+    quote:
+      "Community Physicians delivers evidence-based, patient-centered care with exceptional clinical coordination.",
+    author: "Dr. Dennis Keane, MD",
+    role: "Pain Management & Rehabilitation",
+    image: dennisImg,
   },
 ];
 
