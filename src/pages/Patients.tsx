@@ -4,13 +4,12 @@ import { Phone, Search, Info, ShieldCheck, HelpCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
-import insuranceImage from "@/assets/insurance-page.png"; // 👈 ADD THIS
 
 const Patients = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    document.title = "Accepted Insurance | Community Physicians";
+    document.title = "For Patients - Accepted Insurance | Community Physicians";
     window.scrollTo(0, 0);
   }, []);
 
@@ -34,11 +33,15 @@ const Patients = () => {
     { name: "Provider Partners Health Plan", phone: "800-405-9681" },
     { name: "Railroad Medicare", phone: "888-355-9165" },
     { name: "Sunrise", phone: "844-502-4149" },
-    { name: "United Healthcare", phone: "877-842-3210", note: "Not in network for Medicare replacement plans" },
+    {
+      name: "United Healthcare",
+      phone: "877-842-3210",
+      note: "Not in network for Medicare replacement plans",
+    },
     { name: "Wellcare", phone: "855-538-0454" },
   ];
 
-  const filtered = insuranceList.filter(i =>
+  const filtered = insuranceList.filter((i) =>
     i.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -47,68 +50,62 @@ const Patients = () => {
       <Navigation />
 
       <main className="flex-grow">
+        {/* Hero */}
+        <section
+          className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden"
+          style={{ backgroundImage: `url(/insurance-page.png)` }}
+        >
+          <div className="absolute inset-0 bg-cover bg-center" />
 
-    {/* Header Section */}
-<section
-  className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-cover bg-center"
-  style={{ backgroundImage: `url(${insuranceImage})` }}
->
-  {/* Dark overlay for readability */}
-  <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 backdrop-blur-xl bg-white/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-white/85 to-secondary/30" />
 
+          <div className="relative container mx-auto px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl"
+            >
+              <div className="flex items-center gap-2 mb-6">
+                <span className="h-px w-8 bg-primary"></span>
+                <span className="text-xs tracking-widest uppercase text-primary font-semibold">
+                  Patient Resources
+                </span>
+              </div>
 
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading mb-6 leading-[0.95]">
+                <span className="text-orange-500">Accepted</span>{" "}
+                <span className="text-primary italic">Insurance</span>
+              </h1>
 
-  <div className="relative container mx-auto px-6 lg:px-8">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="max-w-3xl"
-    >
-      <div className="flex items-center gap-2 mb-6">
-        <span className="h-px w-8 bg-primary"></span>
-        <span className="text-xs tracking-widest uppercase text-primary font-semibold">
-          Patient Resources
-        </span>
-      </div>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+                Navigating insurance coverage can be complex. We partner with a wide
+                range of providers to make your care accessible. Please use the list
+                below as a guide, but always verify your specific benefits.
+              </p>
 
-     <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading mb-6">
-  <span className="text-orange-500">Accepted</span>{" "}
-  <span className="text-primary font-bold">Insurance</span>
-</h1>
+              <div className="bg-white/80 border border-border p-6 rounded-xl shadow-sm flex gap-4 items-start max-w-2xl">
+                <Info className="text-primary flex-shrink-0 mt-1" size={24} />
+                <div>
+                  <h4 className="font-semibold text-foreground mb-1">
+                    Important Coverage Note
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Insurance networks change frequently. Even if your plan is listed, we
+                    recommend contacting our billing department or your insurance provider
+                    directly to confirm coverage for specific services.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-
-      <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-        Navigating insurance coverage can be complex. We partner with a wide
-        range of providers to make your care accessible. Please use the list
-        below as a guide, but always verify your specific benefits.
-      </p>
-
-      {/* Coverage Note */}
-      <div className="bg-white border border-border p-6 rounded-lg shadow-sm flex gap-4 items-start max-w-2xl">
-        <Info className="text-primary flex-shrink-0 mt-1" size={24} />
-        <div>
-          <h4 className="font-semibold text-foreground mb-1">
-            Important Coverage Note
-          </h4>
-          <p className="text-sm text-muted-foreground">
-            Insurance networks change frequently. Even if your plan is listed,
-            we recommend contacting our billing department or your insurance
-            provider directly to confirm coverage for specific services.
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  </div>
-</section>
-
-
-        {/* Search & List Section */}
+        {/* Search & List */}
         <section className="py-12 lg:py-20 bg-white">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-
-              {/* Search */}
               <div className="relative mb-10">
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                   <Search className="text-muted-foreground/50" size={18} />
@@ -117,11 +114,19 @@ const Patients = () => {
                   placeholder="Search for your insurance provider..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-12 h-14 text-lg bg-secondary/30 border-transparent focus:bg-white focus:border-primary/50 transition-all rounded-xl"
+                  className="pl-12 h-14 text-lg bg-white/80 border border-border/60 shadow-sm focus:bg-white focus:border-primary/50 transition-all rounded-2xl"
                 />
               </div>
 
-              {/* Insurance List */}
+              <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  Provider Name
+                </span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider hidden sm:block">
+                  Direct Contact
+                </span>
+              </div>
+
               <div className="space-y-2">
                 {filtered.map((ins, index) => (
                   <motion.div
@@ -130,7 +135,7 @@ const Patients = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.03 }}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-lg border border-transparent hover:border-primary/20 hover:bg-secondary/20 transition-all duration-300 group"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-xl border border-transparent hover:border-primary/20 hover:bg-secondary/20 transition-all duration-300 group"
                   >
                     <div className="flex items-start gap-4 mb-3 sm:mb-0">
                       <ShieldCheck className="text-primary/40 group-hover:text-primary transition-colors" size={20} />
@@ -157,10 +162,34 @@ const Patients = () => {
                 ))}
               </div>
 
+              {filtered.length === 0 && (
+                <div className="py-16 text-center bg-secondary/10 rounded-xl border border-dashed border-border mt-4">
+                  <p className="text-muted-foreground mb-2">No results found for "{search}"</p>
+                  <button onClick={() => setSearch("")} className="text-primary font-medium hover:underline text-sm">
+                    Clear search
+                  </button>
+                </div>
+              )}
+
+              <div className="mt-16 bg-primary/5 border border-primary/10 rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center text-center md:text-left">
+                <div className="p-4 bg-white rounded-full shadow-sm text-primary shrink-0">
+                  <HelpCircle size={32} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-heading font-semibold mb-2">Don't see your plan listed?</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Our network is constantly expanding. If your insurance isn't listed above, please give our office a call.
+                    We can perform a courtesy check to see if we can accept your coverage.
+                  </p>
+                  <a href="tel:6303206871" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                    Call our Billing Team at 630.320.6871 <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
-
       </main>
 
       <Footer />
