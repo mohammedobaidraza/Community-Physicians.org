@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Phone, Search, Info, ShieldCheck, HelpCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Phone } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import insuranceImage from "@/assets/insurance-page.png"; // 👈 ADD THIS
 
 const Patients = () => {
-  // Use useEffect to set the document title
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    document.title = "For Patients - Accepted Insurance | Community Physicians";
+    document.title = "Accepted Insurance | Community Physicians";
+    window.scrollTo(0, 0);
   }, []);
 
   const insuranceList = [
@@ -29,80 +34,133 @@ const Patients = () => {
     { name: "Provider Partners Health Plan", phone: "800-405-9681" },
     { name: "Railroad Medicare", phone: "888-355-9165" },
     { name: "Sunrise", phone: "844-502-4149" },
-    { name: "United Healthcare", phone: "877-842-3210", note: "Not in network for Medicare replacement" },
+    { name: "United Healthcare", phone: "877-842-3210", note: "Not in network for Medicare replacement plans" },
     { name: "Wellcare", phone: "855-538-0454" },
   ];
 
+  const filtered = insuranceList.filter(i =>
+    i.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="min-h-screen flex flex-col font-sans">
+    <div className="min-h-screen bg-background font-sans flex flex-col">
       <Navigation />
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="py-20 md:py-28 bg-gradient-to-b from-white to-secondary/10">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading">
-              <span className="text-secondary">Accepted </span>
-              <span className="text-primary">
-                Insurance
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              We work with a wide range of insurance providers to ensure you receive the accessible, high-quality care you deserve.
-            </p>
-          </div>
-        </section>
 
-        {/* Insurance Cards Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {insuranceList.map((insurance, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group h-full flex flex-col"
+    {/* Header Section */}
+<section
+  className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-cover bg-center"
+  style={{ backgroundImage: `url(${insuranceImage})` }}
+>
+  {/* Dark overlay for readability */}
+  <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
+
+
+
+  <div className="relative container mx-auto px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="max-w-3xl"
+    >
+      <div className="flex items-center gap-2 mb-6">
+        <span className="h-px w-8 bg-primary"></span>
+        <span className="text-xs tracking-widest uppercase text-primary font-semibold">
+          Patient Resources
+        </span>
+      </div>
+
+     <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading mb-6">
+  <span className="text-orange-500">Accepted</span>{" "}
+  <span className="text-primary font-bold">Insurance</span>
+</h1>
+
+
+      <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+        Navigating insurance coverage can be complex. We partner with a wide
+        range of providers to make your care accessible. Please use the list
+        below as a guide, but always verify your specific benefits.
+      </p>
+
+      {/* Coverage Note */}
+      <div className="bg-white border border-border p-6 rounded-lg shadow-sm flex gap-4 items-start max-w-2xl">
+        <Info className="text-primary flex-shrink-0 mt-1" size={24} />
+        <div>
+          <h4 className="font-semibold text-foreground mb-1">
+            Important Coverage Note
+          </h4>
+          <p className="text-sm text-muted-foreground">
+            Insurance networks change frequently. Even if your plan is listed,
+            we recommend contacting our billing department or your insurance
+            provider directly to confirm coverage for specific services.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>
+
+
+        {/* Search & List Section */}
+        <section className="py-12 lg:py-20 bg-white">
+          <div className="container mx-auto px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+
+              {/* Search */}
+              <div className="relative mb-10">
+                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                  <Search className="text-muted-foreground/50" size={18} />
+                </div>
+                <Input
+                  placeholder="Search for your insurance provider..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-12 h-14 text-lg bg-secondary/30 border-transparent focus:bg-white focus:border-primary/50 transition-all rounded-xl"
+                />
+              </div>
+
+              {/* Insurance List */}
+              <div className="space-y-2">
+                {filtered.map((ins, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.03 }}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-lg border border-transparent hover:border-primary/20 hover:bg-secondary/20 transition-all duration-300 group"
                   >
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="font-bold text-lg text-gray-800 group-hover:text-primary transition-colors">
-                        {insurance.name}
-                      </h3>
-                      {/* Decorative dot */}
-                      <div className="mt-1.5 w-2 h-2 rounded-full bg-secondary/30 group-hover:bg-primary transition-colors shrink-0 ml-2"></div>
-                    </div>
-                    
-                    <div className="mt-auto">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1 group-hover:text-gray-600 transition-colors">
-                        <Phone size={14} className="text-primary/70" />
-                        <a 
-                          href={`tel:${insurance.phone.replace(/[^0-9]/g, '')}`}
-                          className="hover:text-primary hover:underline transition-all"
-                        >
-                          {insurance.phone}
-                        </a>
+                    <div className="flex items-start gap-4 mb-3 sm:mb-0">
+                      <ShieldCheck className="text-primary/40 group-hover:text-primary transition-colors" size={20} />
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                          {ins.name}
+                        </h3>
+                        {ins.note && (
+                          <div className="mt-2 inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                            Note: {ins.note}
+                          </div>
+                        )}
                       </div>
-
-                      {insurance.note && (
-                        <div className="mt-3 pt-3 border-t border-gray-100">
-                          <p className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded inline-block">
-                            {insurance.note}
-                          </p>
-                        </div>
-                      )}
                     </div>
-                  </div>
+
+                    <a
+                      href={`tel:${ins.phone.replace(/[^0-9]/g, "")}`}
+                      className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-white border border-border px-4 py-2 rounded-full shadow-sm hover:shadow transition-all sm:ml-4 w-fit"
+                    >
+                      <Phone size={14} />
+                      {ins.phone}
+                    </a>
+                  </motion.div>
                 ))}
               </div>
-              
-              <div className="mt-12 text-center text-sm text-muted-foreground bg-gray-50 p-6 rounded-lg border border-gray-100 max-w-2xl mx-auto">
-                <p>
-                  <span className="font-semibold text-primary">Don't see your insurance listed?</span> <br className="hidden md:block"/>
-                  Please contact our office at <a href="tel:6303206871" className="text-primary hover:underline font-medium">630.320.6871</a> to verify coverage, as our accepted networks are constantly expanding.
-                </p>
-              </div>
+
             </div>
           </div>
         </section>
+
       </main>
 
       <Footer />
