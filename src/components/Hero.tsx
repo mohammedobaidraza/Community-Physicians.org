@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/dialog";
 
 import doctor1 from "@/assets/doctor-1.jpg";
-import doctor2 from "@/assets/doctor-2.jpg";
+import doctor2 from "@/assets/doctor-3----.jpg";
 import doctor3 from "@/assets/doctor-3.jpg";
-import doctor4 from "@/assets/doctor-4.jpg";
+import doctor4 from "@/assets/hanzla.png";
 
 const doctors = [
   {
@@ -23,12 +23,12 @@ const doctors = [
     specialty: "Family Medicine",
     bio: "Experienced Family Medicine physician in Oakbrook Terrace, IL, with over 10 years in the medical field. Dr. Ahmed graduated from Saba University School of Medicine in 2013, is affiliated with Northwestern Medicine Central Dupage Hospital, and is currently accepting telehealth appointments."
   },
-  {
+ {
     id: 2,
     image: doctor2,
-    name: "Dr. Arif B. Hussain",
-    specialty: "Pain Management and Rehabilitation Specialist",
-    bio: "Dedicated physician at The Neuroscience and Spine Institute, specializing in interventional pain treatments and physical medicine. Dr. Hussain completed advanced training at Johns Hopkins University School of Medicine and a pain medicine fellowship at the University of Michigan."
+    name: "Dr. Keane",
+    specialty: "[Insert Specialty]",
+    bio: "Dr. Keane provides personalized patient care with an emphasis on [Insert Expertise]. (Please update this bio with specific clinical background and education)."
   },
   {
     id: 3,
@@ -40,9 +40,9 @@ const doctors = [
   {
     id: 4,
     image: doctor4,
-    name: "Dr. Mansoor Ali",
-    specialty: "Internal Medicine",
-    bio: "Internal Medicine physician with a whole-patient clinical approach. Dr. Ali focuses on compassionate, personalized care while managing chronic illnesses and supporting long-term wellness."
+    name: "Dr. Hanzla",
+    specialty: "Physical Medicine & Rehabilitation",
+    bio: "Physical Medicine & Rehabilitation physician focused on restoring mobility and function through rehabilitation-based care, helping patients recover safely and return to daily life with confidence."
   },
 ];
 
